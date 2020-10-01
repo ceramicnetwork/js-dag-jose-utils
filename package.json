@@ -1,0 +1,44 @@
+{
+  "name": "dag-jose-utils",
+  "version": "0.1.0",
+  "description": "Utility functions for the dag-jose ipld codec",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "jest",
+    "build": "./node_modules/.bin/tsc -p tsconfig.json",
+    "prepublishOnly": "npm run build",
+    "prebuild": "npm run clean",
+    "lint": "./node_modules/.bin/eslint ./src --ext .js,.ts",
+    "clean": "rm -rf ./lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ceramicnetwork/js-dag-jose-utils.git"
+  },
+  "author": "3Box Labs",
+  "license": "(Apache-2.0 OR MIT)",
+  "bugs": {
+    "url": "https://github.com/ceramicnetwork/js-dag-jose-utils/issues"
+  },
+  "jest": {
+    "testEnvironment": "jest-environment-uint8array"
+  },
+  "homepage": "https://github.com/ceramicnetwork/js-dag-jose-utils#readme",
+  "dependencies": {
+    "cids": "^1.0.1",
+    "ipld-dag-cbor": "^0.17.0",
+    "multihashes": "^3.0.1",
+    "uint8arrays": "^1.1.0",
+    "varint": "^6.0.0"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.11.5",
+    "@babel/preset-typescript": "^7.10.4",
+    "eslint": "^7.10.0",
+    "eslint-config-3box": "^0.1.2",
+    "jest": "^26.4.2",
+    "jest-environment-uint8array": "^1.0.0",
+    "prettier": "^2.1.2",
+    "typescript": "^4.0.3"
+  }
+}
