@@ -59,7 +59,7 @@ export function decodeIdentityCID(cid: CID): Record<string, any> {
 }
 
 export function prepareCleartext(cleartext: Record<string, any>, blockSize?: number): Uint8Array {
-  return pad(encodeIdentityCID(cleartext).bytes)
+  return pad(encodeIdentityCID(cleartext).bytes, blockSize)
 }
 
 export function decodeCleartext(b: Uint8Array): Record<string, any> {
