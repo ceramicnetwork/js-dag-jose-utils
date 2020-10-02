@@ -23,6 +23,14 @@ import {
 
 ## API
 
+### EncodedPayload
+```ts
+interface EncodedPayload {
+  cid: CID
+  linkedBlock: Uint8Array
+}
+```
+
 ### encodePayload(payload: Record<string, any>): Promise<EncodedPayload>
 Prepares a payload to be signed in a JWS. Note that you will need to encode the `encodePayload.cid.bytes` as `base64url` before signing.
 
