@@ -1,6 +1,6 @@
 {
   "name": "dag-jose-utils",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Utility functions for the dag-jose ipld codec",
   "main": "lib/index.js",
   "scripts": {
@@ -25,10 +25,10 @@
   },
   "homepage": "https://github.com/ceramicnetwork/js-dag-jose-utils#readme",
   "dependencies": {
-    "cids": "^1.0.1",
-    "ipld-dag-cbor": "^0.17.0",
-    "multihashes": "^3.0.1",
-    "uint8arrays": "^1.1.0",
+    "cids": "^1.1.6",
+    "ipld-dag-cbor": "^0.17.1",
+    "multihashes": "^4.0.2",
+    "uint8arrays": "^2.1.4",
     "varint": "^6.0.0"
   },
   "devDependencies": {
