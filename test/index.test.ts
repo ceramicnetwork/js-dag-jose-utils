@@ -1,5 +1,3 @@
-import * as u8a from 'uint8arrays'
-import CID from 'cids'
 import {
   encodePayload,
   prepareCleartext,
@@ -20,22 +18,22 @@ describe('dag-jose-utils', () => {
 
   it('Encodes and decodes identity CIDs', async () => {
     const ct1 = { abc: 123 }
-    const enc1 = encodeIdentityCID(ct1)
+    const enc1 = await encodeIdentityCID(ct1)
     expect(enc1).toMatchSnapshot()
     expect(decodeIdentityCID(enc1)).toEqual(ct1)
     const ct2 = { aLink: enc1 }
-    const enc2 = encodeIdentityCID(ct2)
+    const enc2 = await encodeIdentityCID(ct2)
     expect(enc2).toMatchSnapshot()
     expect(decodeIdentityCID(enc2).aLink.bytes).toEqual(ct2.aLink.bytes)
   })
 
   it('Prepare and decode cleartext', async () => {
     const ct1 = { abc: 123 }
-    const enc1 = prepareCleartext(ct1)
+    const enc1 = await prepareCleartext(ct1)
     expect(enc1).toMatchSnapshot()
     expect(decodeCleartext(enc1)).toEqual(ct1)
     const ct2 = { aLink: enc1 }
-    const enc2 = prepareCleartext(ct2)
+    const enc2 = await prepareCleartext(ct2)
     expect(enc2).toMatchSnapshot()
     expect(decodeCleartext(enc2).aLink.bytes).toEqual(ct2.aLink.bytes)
   })

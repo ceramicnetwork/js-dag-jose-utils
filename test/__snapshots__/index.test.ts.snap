@@ -2,7 +2,7 @@
 
 exports[`dag-jose-utils Encodes and decodes identity CIDs 1`] = `
 Object {
-  "codec": "dag-cbor",
+  "code": 113,
   "hash": Uint8Array [
     0,
     7,
@@ -20,7 +20,7 @@ Object {
 
 exports[`dag-jose-utils Encodes and decodes identity CIDs 2`] = `
 Object {
-  "codec": "dag-cbor",
+  "code": 113,
   "hash": Uint8Array [
     0,
     22,
@@ -136,7 +136,7 @@ Uint8Array [
 exports[`dag-jose-utils Properly encode payload 1`] = `
 Object {
   "cid": Object {
-    "codec": "dag-cbor",
+    "code": 113,
     "hash": Uint8Array [
       18,
       32,
@@ -190,7 +190,7 @@ Object {
 exports[`dag-jose-utils Properly encode payload 2`] = `
 Object {
   "cid": Object {
-    "codec": "dag-cbor",
+    "code": 113,
     "hash": Uint8Array [
       18,
       32,

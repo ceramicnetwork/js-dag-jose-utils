@@ -1,11 +1,9 @@
-import dagCBOR from 'ipld-dag-cbor'
-import CID from 'cids'
-import multihashes from 'multihashes'
-import * as u8a from 'uint8arrays'
-import varint from 'varint'
+import * as Block from 'multiformats/block'
+import { CID } from 'multiformats/cid'
+import { sha256 } from 'multiformats/hashes/sha2'
+import { identity } from 'multiformats/hashes/identity'
+import * as dagCBOR from '@ipld/dag-cbor'
 
-const DAG_CBOR_CODE = 113
-const ID_MULTIHASH = 0
 const ENC_BLOCK_SIZE = 24
 
 export interface EncodedPayload {
@@ -14,10 +12,10 @@ export interface EncodedPayload {
 }
 
 export async function encodePayload(payload: Record<string, any>): Promise<EncodedPayload> {
-  const block = new Uint8Array(dagCBOR.util.serialize(payload))
+  const block = await Block.encode({ value: payload, codec: dagCBOR, hasher: sha256 })
   return {
-    cid: await dagCBOR.util.cid(block),
-    linkedBlock: block,
+    cid: block.cid,
+    linkedBlock: block.bytes
   }
 }
 
@@ -28,38 +26,29 @@ function pad(b: Uint8Array, blockSize = ENC_BLOCK_SIZE): Uint8Array {
   const padLen = (blockSize - (b.length % blockSize)) % blockSize
   // final modulus bs, since if b.length % bs == 24 we don't
   // want to add another 24 bytes.
-  return u8a.concat([b, new Uint8Array(padLen)])
+  const bytes = new Uint8Array(b.length + padLen)
+  bytes.set(b, 0)
+  return bytes
 }
 
 function unpadCIDBytes(b: Uint8Array): CID {
-  // Find where multihash starts.
-  // Multihash lenght is the 4th varint.
-  let offset = 0
-  let mhLen
-  for (let i = 0; i < 4; i++) {
-    mhLen = varint.decode(b, offset)
-    offset += varint.decode.bytes
-  }
-  // Slice padding.
-  return new CID(b.slice(0, offset + mhLen))
+  return CID.decodeFirst(b)[0]
 }
 
-export function encodeIdentityCID(obj: Record<string, any>): CID {
-  const block = dagCBOR.util.serialize(obj)
-  const idMultiHash = multihashes.encode(block, ID_MULTIHASH)
-  return new CID(1, DAG_CBOR_CODE, idMultiHash)
+export async function encodeIdentityCID(obj: Record<string, any>): Promise<CID> {
+  const block = await Block.encode({ value: obj, codec: dagCBOR, hasher: identity })
+  return block.cid
 }
 
 export function decodeIdentityCID(cid: CID): Record<string, any> {
-  CID.validateCID(cid)
-  if (cid.code !== DAG_CBOR_CODE) throw new Error('CID codec must be dag-cbor')
-  const { code, digest } = multihashes.decode(cid.multihash)
-  if (code !== ID_MULTIHASH) throw new Error('CID must use identity multihash')
-  return dagCBOR.util.deserialize(digest)
+  cid = CID.asCID(cid)
+  if (cid.code !== dagCBOR.code) throw new Error('CID codec must be dag-cbor')
+  if (cid.multihash.code !== identity.code) throw new Error('CID must use identity multihash')
+  return dagCBOR.decode(cid.multihash.digest)
 }
 
-export function prepareCleartext(cleartext: Record<string, any>, blockSize?: number): Uint8Array {
-  return pad(encodeIdentityCID(cleartext).bytes, blockSize)
+export async function prepareCleartext(cleartext: Record<string, any>, blockSize?: number): Promise<Uint8Array> {
+  return pad((await encodeIdentityCID(cleartext)).bytes, blockSize)
 }
 
 export function decodeCleartext(b: Uint8Array): Record<string, any> {
