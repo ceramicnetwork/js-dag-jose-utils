@@ -31,7 +31,7 @@ export function toJWSPayload(payload: EncodedPayload | CID): string {
   return base64url.encode(cid.bytes).slice(1)
 }
 
-// map a DagJWT to an array of JWT strings that verifyJWT() will be able to verify
+// map a DagJWS to an array of JWS strings that verifyJWS() will be able to verify
 export function toJWSStrings(jose: Record<string, unknown>): Array<string> {
   if (
     typeof jose === 'object' &&

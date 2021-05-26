@@ -47,10 +47,10 @@ Encode an ipld object as a CID that uses the identity hash.
 Decode an ipld object from a CID that uses the identity hash.
 
 ### toJWSPayload(payload: EncodedPayload | CID): string
-Transform an `EnvodedPayload` (from `encodePayload()`) or a CID into a JWS string for use with `createJWS()` in [did-jwt](https://github.com/decentralized-identity/did-jwt). The string form is simply the Base64url encoded form of the CID's byte representation.
+Transform an `EncodedPayload` (from `encodePayload()`) or a CID into a JWS string for use with `createJWS()` in [did-jwt](https://github.com/decentralized-identity/did-jwt). The string form is simply the Base64url encoded form of the CID's byte representation.
 
 ### toJWSStrings(jose: any): string[]
-Transform a `DagJWT` object from ipld-dag-jose into an array of strings for each signature in the object. The strings can then be verified using `verifyJWS()` in [did-jwt](https://github.com/decentralized-identity/did-jwt).
+Transform a `DagJWS` object from ipld-dag-jose into an array of strings for each signature in the object. The strings can then be verified using `verifyJWS()` in [did-jwt](https://github.com/decentralized-identity/did-jwt).
 
 ## Maintainer
 [Joel Thorstensson](https://github.com/oed)
