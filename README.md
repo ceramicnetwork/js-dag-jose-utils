@@ -1,8 +1,6 @@
 # dag-jose-utils
 
-
-This library provides utilities for using the dag-jose ipld codec. It uses dag-cbor to encode payloads and cleartexts to CIDs.
-
+This library provides utilities for using the [DAG-JOSE](https://github.com/ceramicnetwork/js-dag-jose) IPLD codec. It uses [DAG-CBOR](https://github.com/ipld/js-dag-cbor) to encode payloads and cleartexts to CIDs.
 
 ## Installation
 First install the package
@@ -17,7 +15,9 @@ import {
   prepareCleartext,
   decodeCleartext,
   encodeIdentityCID,
-  decodeIdentityCID
+  decodeIdentityCID,
+  toJWSPayload,
+  toJWSStrings
 } from 'dag-jose-utils'
 ```
 
@@ -46,10 +46,14 @@ Encode an ipld object as a CID that uses the identity hash.
 ### decodeIdentityCID(cid: CID): Record<string, any>
 Decode an ipld object from a CID that uses the identity hash.
 
+### toJWSPayload(payload: EncodedPayload | CID): string
+Transform an `EncodedPayload` (from `encodePayload()`) or a CID into a JWS string for use with `createJWS()` in [did-jwt](https://github.com/decentralized-identity/did-jwt). The string form is simply the Base64url encoded form of the CID's byte representation.
+
+### toJWSStrings(jose: any): string[]
+Transform a `DagJWS` object from ipld-dag-jose into an array of strings for each signature in the object. The strings can then be verified using `verifyJWS()` in [did-jwt](https://github.com/decentralized-identity/did-jwt).
 
 ## Maintainer
 [Joel Thorstensson](https://github.com/oed)
-
 
 ## License
 MIT or APACHE
