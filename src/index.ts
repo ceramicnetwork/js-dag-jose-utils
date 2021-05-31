@@ -23,7 +23,7 @@ export async function encodePayload(payload: Record<string, any>): Promise<Encod
 export function toJWSPayload(payload: EncodedPayload | CID): string {
   let cid = CID.asCID(payload)
   if (!cid) {
-    cid = CID.asCID(payload.cid)
+    cid = CID.asCID((payload as EncodedPayload).cid)
   }
   if (!cid) {
     throw new Error('Payload must be an EncodedPayload or a CID')
