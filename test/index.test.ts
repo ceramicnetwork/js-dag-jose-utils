@@ -1,5 +1,3 @@
-/* eslint-env jest */
-
 import { CID } from 'multiformats/cid'
 import {
   encodePayload,
@@ -8,8 +6,8 @@ import {
   encodeIdentityCID,
   decodeIdentityCID,
   toJWSPayload,
-  toJWSStrings
-} from '../src/index'
+  toJWSStrings,
+} from '../src/index.js'
 
 describe('dag-jose-utils', () => {
   it('Properly encode payload', async () => {
@@ -50,10 +48,10 @@ describe('dag-jose-utils', () => {
     notCID = { my: 'payload' }
     expect(() => toJWSPayload(notCID)).toThrowError(msg)
     const cid = CID.parse('bafyreiejkvsvdq4smz44yuwhfymcuvqzavveoj2at3utujwqlllspsqr6q')
-    expect(toJWSPayload(cid))
-      .toBe('AXESIIlVZVHDkmZ5zFLHLhgqVhkFakcnQJ7pOibQWtcnyhH0')
-    expect(toJWSPayload({ cid, linkedBlock: new Uint8Array([1, 2]) }))
-      .toBe('AXESIIlVZVHDkmZ5zFLHLhgqVhkFakcnQJ7pOibQWtcnyhH0')
+    expect(toJWSPayload(cid)).toBe('AXESIIlVZVHDkmZ5zFLHLhgqVhkFakcnQJ7pOibQWtcnyhH0')
+    expect(toJWSPayload({ cid, linkedBlock: new Uint8Array([1, 2]) })).toBe(
+      'AXESIIlVZVHDkmZ5zFLHLhgqVhkFakcnQJ7pOibQWtcnyhH0'
+    )
   })
 
   it('Creates JWS string namedtuples from DagJWS objects', () => {
@@ -62,19 +60,28 @@ describe('dag-jose-utils', () => {
     expect(() => toJWSStrings({ payload: 'nope' })).toThrowError(msg)
     expect(() => toJWSStrings({ payload: 'nope', signatures: 'nope' })).toThrowError(msg)
     expect(() => toJWSStrings({ payload: 'nope', signatures: ['nope'] })).toThrowError(msg)
-    expect(() => toJWSStrings({ payload: 'nope', signatures: [{ nope: 'nope' }] })).toThrowError(msg)
-    expect(toJWSStrings({
-      payload: 'AXESIIlVZVHDkmZ5zFLHLhgqVhkFakcnQJ7pOibQWtcnyhH0',
-      signatures: [{
-        signature: 'lxSptfM-Q9Y12o8IAjrTomyGZREeIYcIEaM9OO0IVOvhJOggkNyMnQOJnMnl5xMHmejLTSaTL2bnrqszDfBHVA',
-        protected: 'eyJhbGciOiJFUzI1NksifQ'
-      }, {
-        signature: 'kxSptfM-Q9Y12o8IAjrTomyGZREeIYcIEaM9OO0IVOvhJOggkNyMnQOJnMnl5xMHmejLTSaTL2bnrqszDfBHVB',
-        protected: 'dyJhbGciOiJFUzI1NksifR'
-      }]
-    })).toStrictEqual([
+    expect(() => toJWSStrings({ payload: 'nope', signatures: [{ nope: 'nope' }] })).toThrowError(
+      msg
+    )
+    expect(
+      toJWSStrings({
+        payload: 'AXESIIlVZVHDkmZ5zFLHLhgqVhkFakcnQJ7pOibQWtcnyhH0',
+        signatures: [
+          {
+            signature:
+              'lxSptfM-Q9Y12o8IAjrTomyGZREeIYcIEaM9OO0IVOvhJOggkNyMnQOJnMnl5xMHmejLTSaTL2bnrqszDfBHVA',
+            protected: 'eyJhbGciOiJFUzI1NksifQ',
+          },
+          {
+            signature:
+              'kxSptfM-Q9Y12o8IAjrTomyGZREeIYcIEaM9OO0IVOvhJOggkNyMnQOJnMnl5xMHmejLTSaTL2bnrqszDfBHVB',
+            protected: 'dyJhbGciOiJFUzI1NksifR',
+          },
+        ],
+      })
+    ).toStrictEqual([
       'eyJhbGciOiJFUzI1NksifQ.AXESIIlVZVHDkmZ5zFLHLhgqVhkFakcnQJ7pOibQWtcnyhH0.lxSptfM-Q9Y12o8IAjrTomyGZREeIYcIEaM9OO0IVOvhJOggkNyMnQOJnMnl5xMHmejLTSaTL2bnrqszDfBHVA',
-      'dyJhbGciOiJFUzI1NksifR.AXESIIlVZVHDkmZ5zFLHLhgqVhkFakcnQJ7pOibQWtcnyhH0.kxSptfM-Q9Y12o8IAjrTomyGZREeIYcIEaM9OO0IVOvhJOggkNyMnQOJnMnl5xMHmejLTSaTL2bnrqszDfBHVB'
+      'dyJhbGciOiJFUzI1NksifR.AXESIIlVZVHDkmZ5zFLHLhgqVhkFakcnQJ7pOibQWtcnyhH0.kxSptfM-Q9Y12o8IAjrTomyGZREeIYcIEaM9OO0IVOvhJOggkNyMnQOJnMnl5xMHmejLTSaTL2bnrqszDfBHVB',
     ])
   })
 })
