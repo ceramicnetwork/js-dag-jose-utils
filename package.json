@@ -1,6 +1,6 @@
 {
   "name": "dag-jose-utils",
-  "version": "1.0.0",
+  "version": "2.0.0-alpha.0",
   "description": "Utility functions for the dag-jose ipld codec",
   "main": "./lib/index.js",
   "type": "module",
