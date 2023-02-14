@@ -4,6 +4,7 @@
   "compilerOptions": {
     "allowJs": false,
     "baseUrl": ".",
-    "typeRoots": ["./node_modules/@types"]
+    "typeRoots": ["./node_modules/@types"],
+    "outDir": "./dist"
   }
 }
