@@ -70,10 +70,11 @@ export async function encodeIdentityCID(obj: Record<string, any>): Promise<CID> 
 }
 
 export function decodeIdentityCID(cid: CID): Record<string, any> {
-  cid = CID.asCID(cid)
-  if (cid.code !== dagCBOR.code) throw new Error('CID codec must be dag-cbor')
-  if (cid.multihash.code !== identity.code) throw new Error('CID must use identity multihash')
-  return dagCBOR.decode(cid.multihash.digest)
+  const validcid = CID.asCID(cid)
+  if (!validcid) throw new Error('CID could not be parsed')
+  if (validcid.code !== dagCBOR.code) throw new Error('CID codec must be dag-cbor')
+  if (validcid.multihash.code !== identity.code) throw new Error('CID must use identity multihash')
+  return dagCBOR.decode(validcid.multihash.digest)
 }
 
 export async function prepareCleartext(
