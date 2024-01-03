@@ -79,7 +79,7 @@ export function decodeIdentityCID(cid: CID): Record<string, any> {
 
 export async function prepareCleartext(
   cleartext: Record<string, any>,
-  blockSize?: number
+  blockSize?: number,
 ): Promise<Uint8Array> {
   return pad((await encodeIdentityCID(cleartext)).bytes, blockSize)
 }
