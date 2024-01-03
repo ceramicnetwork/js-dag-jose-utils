@@ -1,13 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`dag-jose-utils Encodes and decodes identity CIDs 1`] = `
-Object {
+{
   "/": "bafyqab5bmnqweyyypm",
 }
 `;
 
 exports[`dag-jose-utils Encodes and decodes identity CIDs 2`] = `
-Object {
+{
   "/": "bafyqafvbmvquy2lonpmcutaaafyqab5bmnqweyyypm",
 }
 `;
@@ -95,8 +95,8 @@ Uint8Array [
 `;
 
 exports[`dag-jose-utils Properly encode payload 1`] = `
-Object {
-  "cid": Object {
+{
+  "cid": {
     "/": "bafyreib646j5cp6pa7ghsrq4ke75weyvbm4qtymilgylghcnl7r7cgrrzi",
   },
   "linkedBlock": Uint8Array [
@@ -112,8 +112,8 @@ Object {
 `;
 
 exports[`dag-jose-utils Properly encode payload 2`] = `
-Object {
-  "cid": Object {
+{
+  "cid": {
     "/": "bafyreic7ak633ivrz65oucwftfvqoebcn3dcehk7esoenggittxj3tbsea",
   },
   "linkedBlock": Uint8Array [
